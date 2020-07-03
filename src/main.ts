@@ -167,6 +167,22 @@ async function run() {
       console.log(`${script}`);
     });
 
+    
+    // android-home
+    const androidHome = core.getInput('android-home');
+    if (androidHome) {
+      core.exportVariable('ANDROID_HOME', `${process.env.HOME}/android-sdk`);
+      core.exportVariable('ANDROID_SDK_ROOT', `${process.env.HOME}/android-sdk`);
+    } else {
+      // If this is a self-hosted environment, and the android-home isn't set,
+      // then use a default path in user's home.
+      const selfHosted = core.getInput('self-hosted');
+      if (selfHosted) {
+        core.exportVariable('ANDROID_HOME', `${process.env.HOME}/android-sdk`);
+        core.exportVariable('ANDROID_SDK_ROOT', `${process.env.HOME}/android-sdk`);
+      }
+    }
+
     // custom pre emulator launch script
     const preEmulatorLaunchScriptInput = core.getInput('pre-emulator-launch-script');
     const preEmulatorLaunchScripts = !preEmulatorLaunchScriptInput ? undefined : parseScript(preEmulatorLaunchScriptInput);

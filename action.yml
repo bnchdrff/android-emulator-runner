@@ -67,6 +67,14 @@ inputs:
     required: true
   pre-emulator-launch-script:
     description: 'custom script to run after creating the AVD and before launching the emulator - e.g. `./adjust-emulator-configs.sh`'
+  self-hosted:
+    description: 'Run the actions in a self-hosted environment. This option will ignore your current "ANDROID_HOME" installation and install do a fresh install'
+    default: 'false'
+  android-home:
+    description: 'Path to ANDROID_HOME, useful in self-hosted environment. If the path does not exists, this action will install.'
+  accept-android-sdk-license:
+    description: 'Accept Android SDK License. Make sure you read https://developer.android.com/studio/terms and set to true if you accept.'
+    default: 'false'
 runs:
   using: 'node16'
   main: 'lib/main.js'
