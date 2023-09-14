@@ -96,6 +96,10 @@ export async function installAndroidSdk(apiLevel: string, target: string, arch: 
       await exec.exec(`unzip -o -q emulator.zip -d ${process.env.ANDROID_HOME}`);
       await io.rmRF('emulator.zip');
     }
+
+    console.log('Installing platforms.');
+    await exec.exec(`sh -c \\"sdkmanager 'platform-tools' 'platforms;android-${apiLevel}' > /dev/null"`);
+
     console.log('Installing system images.');
     await exec.exec(`sh -c \\"sdkmanager --install 'system-images;android-${apiLevel};${target};${arch}' --channel=${channelId} > /dev/null"`);
 
@@ -131,13 +135,7 @@ async function installBaseSdk() {
   await exec.exec(`rm ${androidTmpPath}`);
   await exec.exec(`mkdir -p ${sdkHome}`);
 
-  const extraPaths = [
-    `${androidHome}/bin`,
-    `${androidHome}/tools`,
-    `${androidHome}/tools/bin`,
-    `${androidHome}/platform-tools`,
-    `${androidHome}/platform-tools/bin`
-  ];
+  const extraPaths = [`${androidHome}/bin`, `${androidHome}/tools`, `${androidHome}/tools/bin`, `${androidHome}/platform-tools`, `${androidHome}/platform-tools/bin`];
 
   for (const path in extraPaths) {
     core.addPath(path);
