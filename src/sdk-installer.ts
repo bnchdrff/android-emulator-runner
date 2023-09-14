@@ -131,18 +131,18 @@ async function installBaseSdk() {
   await exec.exec(`rm ${androidTmpPath}`);
   await exec.exec(`mkdir -p ${sdkHome}`);
 
-  const path = process.env.PATH || '';
-  const extraPaths = `${androidHome}/bin:${androidHome}/tools:${androidHome}/tools/bin:${androidHome}/platform-tools:${androidHome}/platform-tools/bin`;
+  const extraPaths = [
+    `${androidHome}/bin`,
+    `${androidHome}/tools`,
+    `${androidHome}/tools/bin`,
+    `${androidHome}/platform-tools`,
+    `${androidHome}/platform-tools/bin`
+  ];
 
-  // Remove from path any Android previous installation
-  const pathWithoutAndroid = path
-    .split(':')
-    .filter((entry) => {
-      return !entry.includes('Android');
-    })
-    .join(':');
+  for (const path in extraPaths) {
+    core.addPath(path);
+  }
 
-  core.exportVariable('PATH', `${extraPaths}:${pathWithoutAndroid}`);
   return true;
 }
 
