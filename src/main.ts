@@ -167,7 +167,6 @@ async function run() {
       console.log(`${script}`);
     });
 
-    
     // android-home
     const androidHome = core.getInput('android-home');
     if (androidHome) {

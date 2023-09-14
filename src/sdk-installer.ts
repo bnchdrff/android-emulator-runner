@@ -137,7 +137,7 @@ async function installBaseSdk() {
   // Remove from path any Android previous installation
   const pathWithoutAndroid = path
     .split(':')
-    .filter(entry => {
+    .filter((entry) => {
       return !entry.includes('Android');
     })
     .join(':');
@@ -158,7 +158,7 @@ async function acceptLicenses() {
     );
     return false;
   }
-  
+
   await exec.exec(`mkdir -p ${process.env.ANDROID_SDK_HOME}`);
   await exec.exec(`touch ${process.env.ANDROID_SDK_HOME}/repositories.cfg`);
   await exec.exec(`mkdir -p ${androidHome}/licenses`);
